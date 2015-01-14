@@ -1,7 +1,7 @@
 # =============== #
 # Unity generated #
 # =============== #
-logs/
+#logs/
 config/_backups/
 zones/_backups/
 Temp/
