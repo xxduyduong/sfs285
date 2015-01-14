@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 # Uncomment the following line to override the JVM search sequence
-# INSTALL4J_JAVA_HOME_OVERRIDE=
+INSTALL4J_JAVA_HOME_OVERRIDE="/usr/lib/jvm/jre-1.7.0-openjdk/"
 # Uncomment the following line to add additional VM parameters
 # INSTALL4J_ADD_VM_PARAMS=
 
