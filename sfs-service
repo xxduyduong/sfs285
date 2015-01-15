@@ -1,0 +1,52 @@
+#!bin/sh
+# Use -Dlog4j.debug for Log4J startup debugging info
+# Use -Xms512M -Xmx512M to start with 512MB of heap memory. Set size according to your needs.
+# Use -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled for PermGen GC
+
+SERVICE_NAME=SFS2X-Zero
+PID_PATH_NAME=/tmp/SFS2X-Zero-pid
+
+JAVA_CMD="java"
+
+
+CPATH="./:lib/*:lib/Jetty/*:extensions/__lib__/*"
+#  ${JAVA_CMD} -cp ${CPATH} -Dfile.encoding=UTF-8 com.smartfoxserver.v2.Main $1 $2
+
+case $1 in
+    start)
+        echo Starting $SERVICE_NAME ...
+        if [ ! -f $PID_PATH_NAME ]; then
+            nohup ${JAVA_CMD} -cp ${CPATH} -Dfile.encoding=UTF-8 com.smartfoxserver.v2.Main $1 $2 /tmp 2>> /dev/null >>  /dev/null &
+                        echo $!  > $PID_PATH_NAME
+            echo $SERVICE_NAME started ...
+        else
+            echo $SERVICE_NAME is already running ...
+        fi
+    ;;
+    stop)
+        if [ -f $PID_PATH_NAME ]; then
+            PID=$(cat $PID_PATH_NAME);
+            echo $SERVICE_NAME stoping ...
+            kill $PID;
+            echo $SERVICE_NAME stopped ...
+            rm $PID_PATH_NAME
+        else
+            echo $SERVICE_NAME is not running ...
+        fi
+    ;;
+    restart)
+        if [ -f $PID_PATH_NAME ]; then
+            PID=$(cat $PID_PATH_NAME);
+            echo $SERVICE_NAME stopping ...;
+            kill $PID;
+            echo $SERVICE_NAME stopped ...;
+            rm $PID_PATH_NAME
+            echo $SERVICE_NAME starting ...
+             nohup ${JAVA_CMD} -cp ${CPATH} -Dfile.encoding=UTF-8 com.smartfoxserver.v2.Main $1 $2 /tmp 2>> /dev/null >>  /dev/null &
+                        echo $! > $PID_PATH_NAME
+            echo $SERVICE_NAME started ...
+        else
+            echo $SERVICE_NAME is not running ...
+        fi
+    ;;
+esac 

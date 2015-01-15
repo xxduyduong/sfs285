@@ -8,4 +8,4 @@ JAVA_CMD="java"
 #fi
 
 CPATH="./:lib/*:lib/Jetty/*:lib/Lib/*:extensions/__lib__/*"
-${JAVA_CMD} -server ${CPATH} -Dfile.encoding=UTF-8 com.smartfoxserver.v2.Main $1 $2
+${JAVA_CMD} -cp ${CPATH} -Dfile.encoding=UTF-8 com.smartfoxserver.v2.Main $1 $2
